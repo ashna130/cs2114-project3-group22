@@ -1,10 +1,4 @@
 package fastfoodsim.View;
-public class Observer
-{
-    //~ Fields ................................................................
-
-    //~ Constructors ..........................................................
-
-    //~Public  Methods ........................................................
-
+public interface Observer {
+    void update(String display, int orderNumbers);
 }
