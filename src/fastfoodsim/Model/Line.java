@@ -97,6 +97,14 @@ public class Line<T>
     }
     
     /**
+     * Returns the number of orders in line.
+     * @return int size of line
+     */
+    public int size() {
+        return size;
+    }
+    
+    /**
      * Returns true if queue is empty, else false.
      * @return boolean if queue is empty or not
      */
