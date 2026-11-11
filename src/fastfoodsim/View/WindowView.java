@@ -31,8 +31,12 @@ public class WindowView extends JFrame implements Observer {
     private JLabel numberOfOrders;
     private JLabel title;
     
-    //LineController controller
-    public WindowView() {
+    // ----------------------------------------------------------
+    /**
+     * Create a new WindowView object.
+     * @param controller
+     */
+    public WindowView(LineController controller) {
         Font titleFont = new Font("Arial", Font.BOLD, 24);
         Font orderFont = titleFont.deriveFont((float) 20);
         
@@ -63,12 +67,12 @@ public class WindowView extends JFrame implements Observer {
         timer.start();
         
         buttonAdd = new JButton("New Order");
-        //buttonAdd.addActionListener(e -> controller.onAddClicked(inputLock));
+        buttonAdd.addActionListener(e -> controller.onAddClicked(inputLock));
         buttonAdd.setBackground(buttonColor);
         buttonAdd.setForeground(buttonText);
         
         buttonRemove = new JButton("Remove Order");
-        //buttonRemove.addActionListener(e -> controller.onRemoveClicked(inputLock));
+        buttonRemove.addActionListener(e -> controller.onRemoveClicked(inputLock));
         buttonRemove.setBackground(buttonColor);
         buttonRemove.setForeground(buttonText);
         

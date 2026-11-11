@@ -1,6 +1,7 @@
 package fastfoodsim.Control;
 
 import fastfoodsim.View.*;
+import fastfoodsim.Model.*;
 
 public class Driver
 {
@@ -11,6 +12,13 @@ public class Driver
     //~Public  Methods ........................................................
     
     public static void main(String[] args) {
-        WindowView windowView1 = new WindowView();
+        Line<Order> model = new Line<Order>();
+        LineController controller = new LineController(model);
+        
+        ConsoleView consoleView = new ConsoleView();
+        WindowView windowView = new WindowView(controller);
+        
+        model.addObserver(consoleView);
+        model.addObserver(windowView);
     }
 }

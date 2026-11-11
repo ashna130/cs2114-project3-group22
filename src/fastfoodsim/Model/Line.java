@@ -1,15 +1,19 @@
 package fastfoodsim.Model;
 
+import fastfoodsim.View.Observer;
+import java.util.ArrayList;
+import java.util.List;
+
 //import doublylinkedlist.DLList;
 
 /**
  *  This class handles the queue of orders using the inner Node class.
- *  @param <Order>
+ *  @param <T>
  * 
  *  @author ashna
  *  @version Nov 4, 2026
  */
-public class Line<Order>
+public class Line<T>
 {
     /**
      *  The Node class creates the linked queue.
@@ -18,20 +22,20 @@ public class Line<Order>
      *  @author ashna
      *  @version Nov 4, 2026
      */
-    private static class Node<Order>
+    private static class Node<T>
     {
-        private Node<Order> next;
+        private Node<T> next;
         private Order data;
         
         public Node(Order d) {
             data = d;
         }
         
-        public void setNext(Node<Order> n) {
+        public void setNext(Node<T> n) {
             next = n;
         }
         
-        public Node<Order> getNext() {
+        public Node<T> getNext() {
             return next;
         }
         
@@ -44,24 +48,32 @@ public class Line<Order>
     private Node<Order> tail;
     private int size;
     
+    private List<Observer> observers = new ArrayList<>();
+    
     /**
      * Constructor
      */
     public Line() {
+        //Order firstOrder = new Order();
         head = new Line.Node<Order>(null);
-        tail = new Line.Node<>(null);
+        tail = head;
         head.setNext(tail);
         size = 0;
     }
     
     /**
      * Adds order to end of queue.
-     * @param Order the order being added
+     * @param order the order being added
      */
     public void enqueue(Order order) {
-        //Node<Order> newNode = new Node(order);
-        //tail = tail.setNext(newNode);
+        Node<Order> newNode = new Node<Order>(order);
+        tail.setNext(newNode);
+        tail = newNode;
+        if(size == 0) {
+            head = tail;
+        }
         size++;
+        notifyObservers();
     }
     
     /**
@@ -69,9 +81,10 @@ public class Line<Order>
      * @return String order name
      */
     public String deque() {
-        String orderName = (String)head.getData();
+        String orderName = head.getData().toString();
         head = head.getNext();
         size--;
+        notifyObservers();
         return orderName;
     }
     
@@ -89,5 +102,32 @@ public class Line<Order>
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+    
+    
+    // ----------------------------------------------------------
+    /**
+     * Mutator for the observer field
+     * @param o The observer to be added to the list of observers to update
+     */
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+    
+    /**
+     * Calls update for every observer
+     */
+    private void notifyObservers() {
+        String display;
+        if(size == 0) {
+            display = "Line is empty!";
+            System.out.println(display);
+        } else {
+            display = peek().toString();
+            //display = "Peeking";
+        }
+        for(Observer o : observers) {
+            o.update(display, size);
+        }
     }
 }

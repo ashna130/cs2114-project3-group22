@@ -22,14 +22,18 @@ public class LineController
     /**
      * Adds order to back of the line.
      */
-    public void onAddClicked() {
-        model.enqueue(new Order());
+    public void onAddClicked(boolean locked) {
+        if(!locked) {
+            model.enqueue(new Order());
+        }
     }
     
     /**
      * Removes order from beginning of line.
      */
-    public void onRemoveClicked() {
-        model.deque();
+    public void onRemoveClicked(boolean locked) {
+        if(!locked && !model.isEmpty() ) {
+            model.deque();
+        }
     }
 }
