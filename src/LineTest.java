@@ -4,23 +4,26 @@ import org.junit.Test;
 
 public class LineTest
 {
-
+    private Line<Order> line1;
+    private Order order1;
+    private Order order2;
+    
     @Before
     public void setUp()
-        throws Exception
     {
+        order1 = new Order();
+        order2 = new Order();
+        line1 = new Line<Order>();
     }
-    //~ Fields ................................................................
-
-
+    
+    /**
+     * Tests enqueue when line is empty.
+     */
     @Test
-    public void test()
+    public void testEnqueueEmpty()
     {
-        fail("Not yet implemented");
+        line1.enqueue(order1);
+        assertFalse(line1.isEmpty());
     }
-
-    //~ Constructors ..........................................................
-
-    //~Public  Methods ........................................................
 
 }
