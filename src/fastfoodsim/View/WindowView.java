@@ -1,7 +1,7 @@
 package fastfoodsim.View;
 
 import javax.swing.*;
-import fastfoodsim.Control.LineController;
+import fastfoodsim.Control.ShopController;
 import java.awt.*;
 
 // -------------------------------------------------------------------------
@@ -23,7 +23,8 @@ public class WindowView extends JFrame implements Observer {
      */
     
     private JButton buttonRemove;
-    private JButton buttonAdd;
+    private JButton buttonInPersonOrder;
+    private JButton buttonMobileOrder;
     private final int cooldownTime = 100;   //Measured in milliseconds
     private Timer timer;
     private boolean inputLock = true;
@@ -36,7 +37,7 @@ public class WindowView extends JFrame implements Observer {
      * Create a new WindowView object.
      * @param controller
      */
-    public WindowView(LineController controller) {
+    public WindowView(ShopController controller) {
         Font titleFont = new Font("Arial", Font.BOLD, 24);
         Font orderFont = titleFont.deriveFont((float) 20);
         
@@ -66,10 +67,15 @@ public class WindowView extends JFrame implements Observer {
         timer.setRepeats(false);
         timer.start();
         
-        buttonAdd = new JButton("New Order");
-        buttonAdd.addActionListener(e -> controller.onAddClicked(inputLock));
-        buttonAdd.setBackground(buttonColor);
-        buttonAdd.setForeground(buttonText);
+        buttonInPersonOrder = new JButton("New Order");
+        buttonInPersonOrder.addActionListener(e -> controller.onCafeClicked(inputLock));
+        buttonInPersonOrder.setBackground(buttonColor);
+        buttonInPersonOrder.setForeground(buttonText);
+        
+        buttonMobileOrder = new JButton("Mobile Order");
+        buttonMobileOrder.addActionListener(e -> controller.onMobileClicked(inputLock));
+        buttonMobileOrder.setBackground(buttonColor);
+        buttonMobileOrder.setForeground(buttonText);
         
         buttonRemove = new JButton("Remove Order");
         buttonRemove.addActionListener(e -> controller.onRemoveClicked(inputLock));
@@ -78,8 +84,9 @@ public class WindowView extends JFrame implements Observer {
         
         add(numberOfOrders, BorderLayout.NORTH);
         add(currentOrder, BorderLayout.CENTER);
-        add(buttonAdd, BorderLayout.EAST);
-        add(buttonRemove, BorderLayout.WEST);
+        add(buttonInPersonOrder, BorderLayout.EAST);
+        add(buttonMobileOrder, BorderLayout.WEST);
+        add(buttonRemove, BorderLayout.SOUTH);
         add(title, BorderLayout.NORTH);
         setVisible(true);
     }
@@ -94,9 +101,8 @@ public class WindowView extends JFrame implements Observer {
     }
     
     @Override
-    public void update(String display, int orderNumbers) {
-        currentOrder.setText("Current Order: " + display);
-        numberOfOrders.setText("" + orderNumbers);
+    public void update(String display) {
+        currentOrder.setText(display);
         //todo
         timer.restart();
         inputLock = true;

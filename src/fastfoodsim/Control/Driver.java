@@ -12,8 +12,8 @@ public class Driver
     //~Public  Methods ........................................................
     
     public static void main(String[] args) {
-        Line<Order> model = new Line<Order>();
-        LineController controller = new LineController(model);
+        Shop model = new Shop();
+        ShopController controller = new ShopController(model);
         
         ConsoleView consoleView = new ConsoleView();
         WindowView windowView = new WindowView(controller);

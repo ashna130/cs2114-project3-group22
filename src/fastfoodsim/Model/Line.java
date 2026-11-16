@@ -4,138 +4,189 @@ import fastfoodsim.View.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-//import doublylinkedlist.DLList;
+// import doublylinkedlist.DLList;
 
 /**
- *  This class handles the queue of orders using the inner Node class.
- *  @param <T>
+ * This class handles the queue of orders using the inner Node class.
  * 
- *  @author ashna
- *  @version Nov 4, 2026
+ * @param <T>
+ * @author ashna
+ * @version Nov 4, 2026
  */
 public class Line<T>
 {
     /**
-     *  The Node class creates the linked queue.
-     *  @param <Order>
+     * The Node class creates the linked queue.
      * 
-     *  @author ashna
-     *  @version Nov 4, 2026
+     * @param <Order>
+     * @author ashna
+     * @version Nov 4, 2026
      */
     private static class Node<T>
     {
         private Node<T> next;
         private Order data;
-        
-        public Node(Order d) {
+
+        public Node(Order d)
+        {
             data = d;
         }
-        
-        public void setNext(Node<T> n) {
+
+
+        public void setNext(Node<T> n)
+        {
             next = n;
         }
-        
-        public Node<T> getNext() {
+
+
+        public Node<T> getNext()
+        {
             return next;
         }
-        
-        public Order getData() {
+
+
+        public Order getData()
+        {
             return data;
         }
     }
-    
+
     private Node<Order> head;
     private Node<Order> tail;
     private int size;
-    
-    private List<Observer> observers = new ArrayList<>();
-    
+
+    //private List<Observer> observers = new ArrayList<>();
+
     /**
      * Constructor
      */
-    public Line() {
-        //Order firstOrder = new Order();
+    public Line()
+    {
+        // Order firstOrder = new Order();
         head = new Line.Node<Order>(null);
         tail = head;
         head.setNext(tail);
         size = 0;
     }
-    
+
+
     /**
      * Adds order to end of queue.
-     * @param order the order being added
+     * 
+     * @param order
+     *            the order being added
      */
-    public void enqueue(Order order) {
+    public void enqueue(Order order)
+    {
         Node<Order> newNode = new Node<Order>(order);
         tail.setNext(newNode);
         tail = newNode;
-        if(size == 0) {
+        if (size == 0)
+        {
             head = tail;
         }
         size++;
-        notifyObservers();
+        //notifyObservers();
     }
-    
+
+
     /**
      * Removes order from front of the queue.
+     * 
      * @return String order name
      */
-    public String deque() {
+    public String deque()
+    {
+        if (size == 0)
+        {
+            return "Empty Line";
+        }
         String orderName = head.getData().toString();
         head = head.getNext();
         size--;
-        notifyObservers();
+        //notifyObservers();
+
         return orderName;
     }
-    
+
+
     /**
      * Returns the order at the front of the queue.
+     * 
      * @return Order first order in line
      */
-    public Order peek() {
+    public Order peek()
+    {
         return head.getData();
     }
-    
+
+
     /**
      * Returns the number of orders in line.
+     * 
      * @return int size of line
      */
-    public int size() {
+    public int size()
+    {
         return size;
     }
-    
+
+
     /**
      * Returns true if queue is empty, else false.
+     * 
      * @return boolean if queue is empty or not
      */
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return size == 0;
     }
-    
-    
+
+
+    @Override
+    public String toString()
+    {
+        if (size == 0)
+        {
+            return "Empty Line";
+        }
+
+        return peek().toString();
+    }
+
+
     // ----------------------------------------------------------
     /**
      * Mutator for the observer field
-     * @param o The observer to be added to the list of observers to update
+     * 
+     * @param o
+     *            The observer to be added to the list of observers to update
      */
-    public void addObserver(Observer o) {
-        observers.add(o);
-    }
-    
-    /**
-     * Calls update for every observer
-     */
-    private void notifyObservers() {
-        String display;
-        if(size == 0) {
-            display = "Line is empty!";
-            System.out.println(display);
-        } else {
-            display = peek().toString();
-            //display = "Peeking";
-        }
-        for(Observer o : observers) {
-            o.update(display, size);
-        }
-    }
+//    public void addObserver(Observer o)
+//    {
+//        observers.add(o);
+//    }
+//
+
+//    /**
+//     * Calls update for every observer
+//     */
+//    private void notifyObservers()
+//    {
+//        String display;
+//        if (size == 0)
+//        {
+//            display = "Line is empty!";
+//            System.out.println(display);
+//        }
+//        else
+//        {
+//            display = peek().toString();
+//            // display = "Peeking";
+//        }
+//        for (Observer o : observers)
+//        {
+//            o.update(display, size);
+//        }
+//    }
 }
