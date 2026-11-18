@@ -73,41 +73,63 @@ public class ShopTest {
      * Tests removeOrder when currentLine is mobile.
      */
     public void testRemoveOrderMobile() {
-
+        fill(1,4);
+        int before = observer.count();
+        assertRemovesServes(false);
+        assertEquals(before + 1, observer.count());
     }
 
     /**
      * Tests removeOrder when currentLine mobile is empty.
      */
     public void testRemoveOrderMobileEmpty() {
-
+        fill(2, 0);
+        assertRemoveServes(true);
     }
 
     /**
      * Tests removeOrder when currentLine is cafe.
      */
     public void testRemoveOrderCafe() {
-        
+        fill(2, 2);
+        int before = observer.count();
+        assertRemoveServes(true);
+        assertEquals(before + 1, observer.count());   
     }
 
     /**
      * Tests removeOrder when currentLine cafe is empty.
      */
     public void testRemoveOrderCafeEmpty() {
-        
+        fill(0, 2);
+        assertRemoveServes(false);
     }
 
     /**
      * Tests addObserver.
      */
     public void testAddObserver() {
-        
+        RecordingObserver second = new RecordingObserver();
+        shop1.addObserver(second);
+
+        shop1.addOrder(true);
+
+        assertEquals(1, observer.count());
+        assertEquals(1, second.count());
     }
 
     /**
      * Tests notifyObservers.
      */
     public void testNotifyObservers() {
+     RecordingObserver second = new RecordingObserver();
+        shop1.addObserver(second);
 
+        shop1.addOrder(false);
+
+        String display = observer.last();
+        assertTrue(display.startsWith("Cafe: "));
+        assertTrue(display.contains(SEP));
+        assertEquals(display, second.last());
     }
 }
