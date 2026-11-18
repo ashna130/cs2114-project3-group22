@@ -117,6 +117,9 @@ public class Line<T>
      */
     public Order peek()
     {
+        if (size == 0) {
+            return null;
+        }
         return head.getData();
     }
 
