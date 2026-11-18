@@ -15,11 +15,9 @@ import java.util.Observer;
 
 public class ShopTest {
     private Shop shop1;
-    private List<Observer> observers;
     
     @Before
     public void setUp() {
-        observers = new ArrayList<>();
         shop = new Shop();
     }
     
