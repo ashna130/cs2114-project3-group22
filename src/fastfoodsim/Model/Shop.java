@@ -57,6 +57,15 @@ public class Shop
         return observers;
     }
     
+    // ----------------------------------------------------------
+    /**
+     * Place a description of your method here.
+     * @return the current line
+     */
+    public Line<Order> getCurrentLine() {
+        return currentLine;
+    }
+    
     /**
      * Calls update for every observer
      */
