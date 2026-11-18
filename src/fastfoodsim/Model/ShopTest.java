@@ -15,12 +15,13 @@ import student.TestCase;
  * Tests for the Shop class. 
  */
 
-public class ShopTest {
+public class ShopTest extends TestCase{
     private Shop shop1;
     
     /**
      * Sets up variables to use for tests.
      */
+    @Before
     public void setUp() {
         shop1 = new Shop();
     }
@@ -28,6 +29,7 @@ public class ShopTest {
     /**
      * Tests decideLine when the cafe is empty.
      */
+    @Test
     public void testDecideLineCafeEmpty() {
         assertTrue(shop1.getCafeLine().isEmpty());
         shop1.decideLine();
@@ -37,6 +39,7 @@ public class ShopTest {
     /**
      * Tests decideLine when cafe isn't empty.
      */
+    @Test
     public void testDecideLineCafeNotEmpty() {
         shop1.addOrder(true);
         shop1.addOrder(false);
@@ -47,6 +50,7 @@ public class ShopTest {
     /**
      * Tests decideLine when mobile has more than 3 more orders than cafe.
      */
+    @Test
     public void testDecideLineMobile3MoreOrders() {
         for(int i = 0; i < 4; i++) {
             shop1.addOrder(false);
@@ -59,6 +63,7 @@ public class ShopTest {
     /**
      * Tests decideLine when mobile has a lot more orders than cafe.
      */
+    @Test
     public void testDecideLineMobileMore() {
         for(int i = 0; i < 10; i++) {
             shop1.addOrder(false);
@@ -71,6 +76,7 @@ public class ShopTest {
     /**
      * Tests addOrder when the currentLine is cafe.
      */
+    @Test
     public void testAddOrderTrue() {
         assertTrue(shop1.getCafeLine().isEmpty());
         assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
@@ -81,6 +87,7 @@ public class ShopTest {
     /**
      * Tests addOrder when the currentLine is mobile.
      */
+    @Test
     public void testAddOrderFalse() {
         for(int i = 0; i < 4; i++) {
             shop1.addOrder(false);

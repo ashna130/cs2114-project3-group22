@@ -66,6 +66,7 @@ public class Shop
         return currentLine;
     }
     
+    // ----------------------------------------------------------
     /**
      * @return the mobile order line
      */
@@ -73,6 +74,7 @@ public class Shop
         return mobile;
     }
     
+    // ----------------------------------------------------------
     /**
      * @return the cafe order line
      */
