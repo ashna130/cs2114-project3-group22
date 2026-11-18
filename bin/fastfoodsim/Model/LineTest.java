@@ -24,6 +24,7 @@ public class LineTest {
     /**
      * Tests size when line is empty.
      */
+    @Test
     public void testSizeEmpty() {
         assertTrue(line.isEmpty());
         assertEquals(0, line.size());
@@ -32,6 +33,7 @@ public class LineTest {
     /**
      * Tests size when line is not empty.
      */
+    @Test
     public void testSize() {
         line.enqueue(order1);
         assertEquals(1, line.size());
@@ -44,11 +46,15 @@ public class LineTest {
     public void testPeekEmpty() {
         assertTrue(line.isEmpty());
         assertNull(line.peek());
+        line.enqueue(order1);
+        line.deque();
+        assertNull(line.peek());
     }
 
     /**
      * Tests peek.
      */
+    @Test
     public void testPeek() {
         line.enqueue(order1);
         assertEquals(order1, line.peek());
@@ -85,31 +91,79 @@ public class LineTest {
     public void testDeque() {
         line.enqueue(order1);
         assertFalse(line.isEmpty());
-        line.deque();
+        assertEquals(order1.getData(), line.deque());
         assertTrue(line.isEmpty());
     }
 
     /**
      * Tests deque multiple times.
      */
+    @Test
     public void testDequeMultiple() {
         line.enqueue(order1);
         line.enqueue(order2);
         assertFalse(line.isEmpty());
-        line.deque();
+        assertEquals(order1.getData(), line.deque());
         assertEquals(order2, line.peek());
         assertEquals(1, line.size());
-        line.deque();
+        assertEquals(order2.getData(), line.deque());
+        assertEquals(0, line.size());
         assertTrue(line.isEmpty());
     }
 
     /**
-     * Tests addObserver
+     * Tests deque when empty.
      */
     @Test
-    public void testAddObserver() {
-        assertEquals(0, observers.size());
-        line.addObserver();
-        assertEquals(1, observers.size());
+    public void testDequeEmpty() {
+        assertTrue(line.isEmpty());
+        assertEquals("Empty Line", line.deque());
+        assertTrue(line.isEmpty());
+    }
+
+    /**
+     * Tests enqueues and deques following each other.
+     */
+    @Test
+    public void testEnqueueDeque() {
+        assertTrue(line.isEmpty());
+        line.enqueue(order1);
+        line.enqueue(order2);
+        assertEquals(2, line.size());
+        assertEquals(order1.getData(), line.peek());
+        assertEquals(order1.getData(), line.deque());
+        assertEquals(1, line.size());
+        line.enqueue(order1);
+        assertEquals(2, line.size());
+        assertEquals(order2.getData(), line.peek());
+        assertEquals(order2.getData(), line.deque());
+        assertEquals(1, line.size());
+        assertEquals(order1.getData(), line.deque());
+        assertEquals(0, line.size());
+        assertTrue(line.isEmpty());
+        line.enqueue(order1);
+        assertEquals(1, line.size());
+    }
+
+    /**
+     * Test toString when line is empty.
+     */
+    @Test
+    public void testToStringEmpty() {
+        assertTrue(line.isEmpty());
+        assertEquals("Empty Line", line.toString());
+    }
+
+    /**
+     * Test toString.
+     */
+    @Test
+    public void testToString() {
+        line.enqueue(order1);
+        line.enqueue(order2);
+        assertFalse(line.isEmpty());
+        assertEquals(order1.getData(), line.toString());
+        line.deque();
+        assertEquals(order2.getData(), line.toString());
     }
 }
