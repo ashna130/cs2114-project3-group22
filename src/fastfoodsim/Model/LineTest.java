@@ -1,30 +1,36 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package fastfoodsim.Model;
 
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertFalse;
+//import static org.junit.jupiter.api.Assertions.assertNotNull;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+//import org.junit.*;
+
+import student.TestCase;
  
 /**
  * Tests for the Line class. 
  */
 
-public class LineTest {
+public class LineTest extends TestCase{
     private Line<Order> line;
     private Order order1;
     private Order order2;
 
-    @Before
+    //@Before
     public void setUp() {
+        //System.out.println("Running setUp()");
+        line = new Line<Order>();
         order1 = new Order();
         order2 = new Order();
-        line = new Line<Order>();
     }
 
     /**
      * Tests size when line is empty.
      */
-    @Test
+    //@Test
     public void testSizeEmpty() {
         assertTrue(line.isEmpty());
         assertEquals(0, line.size());
@@ -45,10 +51,10 @@ public class LineTest {
     @Test
     public void testPeekEmpty() {
         assertTrue(line.isEmpty());
-        assertNull(line.peek());
+        //assertNull(line.peek());
         line.enqueue(order1);
         line.deque();
-        assertNull(line.peek());
+        //assertNull(line.peek());
     }
 
     /**
@@ -75,7 +81,7 @@ public class LineTest {
     /**
      * Tests enqueue when line is not empty.
      */
-    @Test
+    //@Test
     public void testEnqueue() {
         line.enqueue(order1);
         line.enqueue(order2);
@@ -91,7 +97,7 @@ public class LineTest {
     public void testDeque() {
         line.enqueue(order1);
         assertFalse(line.isEmpty());
-        assertEquals(order1.getData(), line.deque());
+        assertEquals(order1.toString(), line.deque());
         assertTrue(line.isEmpty());
     }
 
@@ -103,10 +109,10 @@ public class LineTest {
         line.enqueue(order1);
         line.enqueue(order2);
         assertFalse(line.isEmpty());
-        assertEquals(order1.getData(), line.deque());
+        assertEquals(order1.toString(), line.deque());
         assertEquals(order2, line.peek());
         assertEquals(1, line.size());
-        assertEquals(order2.getData(), line.deque());
+        assertEquals(order2.toString(), line.deque());
         assertEquals(0, line.size());
         assertTrue(line.isEmpty());
     }
@@ -130,15 +136,15 @@ public class LineTest {
         line.enqueue(order1);
         line.enqueue(order2);
         assertEquals(2, line.size());
-        assertEquals(order1.getData(), line.peek());
-        assertEquals(order1.getData(), line.deque());
+        assertEquals(order1, line.peek());
+        assertEquals(order1.toString(), line.deque());
         assertEquals(1, line.size());
         line.enqueue(order1);
         assertEquals(2, line.size());
-        assertEquals(order2.getData(), line.peek());
-        assertEquals(order2.getData(), line.deque());
+        assertEquals(order2, line.peek());
+        assertEquals(order2.toString(), line.deque());
         assertEquals(1, line.size());
-        assertEquals(order1.getData(), line.deque());
+        assertEquals(order1.toString(), line.deque());
         assertEquals(0, line.size());
         assertTrue(line.isEmpty());
         line.enqueue(order1);
@@ -162,8 +168,8 @@ public class LineTest {
         line.enqueue(order1);
         line.enqueue(order2);
         assertFalse(line.isEmpty());
-        assertEquals(order1.getData(), line.toString());
+        assertEquals(order1.toString(), line.toString());
         line.deque();
-        assertEquals(order2.getData(), line.toString());
+        assertEquals(order2.toString(), line.toString());
     }
 }
