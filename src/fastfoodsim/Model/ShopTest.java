@@ -17,40 +17,51 @@ import student.TestCase;
 
 public class ShopTest {
     private Shop shop1;
+    private RecordingObserver observer
     
     /**
      * Sets up variables to use for tests.
      */
     public void setUp() {
         shop1 = new Shop();
+        observer = new RecordingObserver();
+        shop1.addObserver(observer);
     }
     
     /**
      * Tests decideLine when the cafe is empty.
      */
     public void testDecideLineCafeEmpty() {
-        
+        fill(0, 2);
+        shop1.decideLine();
+        assertRemoveServes(false);
     }
     
     /**
      * Tests decideLine when mobile has 3 more orders than cafe.
      */
     public void testDecideLineMobile3MoreOrders() {
-        
+        fill(1, 4);
+        shop1.decideLine();
+        assertRemoveServes(false);
     }
 
     /**
      * Tests decideLine when mobile has more than 3 more orders than cafe.
      */
     public void testDecideLineMobileTooManyOrders() {
-        
+        fill(1, 7);
+        shop1.decideLine();
+        assertRemoveServes(false);
     }
 
     /**
      * Tests decideLine when cafe has more orders than mobile.
      */
     public void testDecideLineCafeMoreOrders() {
-
+        fill(4, 1);
+        shop1.decideLine();
+        assertRemoveServes(true);
     }
 
     /**
