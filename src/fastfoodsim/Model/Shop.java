@@ -49,6 +49,14 @@ public class Shop
         observers.add(o);
     }
     
+    // ----------------------------------------------------------
+    /**
+     * @return The list of observers that the shop is storing
+     */
+    public List<Observer> getObservers() {
+        return observers;
+    }
+    
     /**
      * Calls update for every observer
      */
