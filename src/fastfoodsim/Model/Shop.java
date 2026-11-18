@@ -67,6 +67,20 @@ public class Shop
     }
     
     /**
+     * @return the mobile order line
+     */
+    public Line<Order> getMobileLine() {
+        return mobile;
+    }
+    
+    /**
+     * @return the cafe order line
+     */
+    public Line<Order> getCafeLine() {
+        return cafe;
+    }
+    
+    /**
      * Calls update for every observer
      */
     private void notifyObservers() {
