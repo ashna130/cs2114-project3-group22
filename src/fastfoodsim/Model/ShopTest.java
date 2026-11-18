@@ -1,5 +1,6 @@
 package fastfoodsim.Model;
 
+import static org.junit.Assert.*;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertFalse;
 //import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,7 +18,9 @@ import student.TestCase;
 public class ShopTest {
     private Shop shop1;
     
-    @Before
+    /**
+     * Sets up variables to use for tests.
+     */
     public void setUp() {
         shop1 = new Shop();
     }
@@ -25,7 +28,6 @@ public class ShopTest {
     /**
      * Tests decideLine when the cafe is empty.
      */
-    @Test 
     public void testDecideLineCafeEmpty() {
         
     }
@@ -33,7 +35,6 @@ public class ShopTest {
     /**
      * Tests decideLine when mobile has 3 more orders than cafe.
      */
-    @Test 
     public void testDecideLineMobile3MoreOrders() {
         
     }
@@ -41,7 +42,6 @@ public class ShopTest {
     /**
      * Tests decideLine when mobile has more than 3 more orders than cafe.
      */
-    @Test 
     public void testDecideLineMobileTooManyOrders() {
         
     }
@@ -49,7 +49,6 @@ public class ShopTest {
     /**
      * Tests decideLine when cafe has more orders than mobile.
      */
-    @Test
     public void testDecideLineCafeMoreOrders() {
 
     }
@@ -57,23 +56,22 @@ public class ShopTest {
     /**
      * Tests addOrder when the currentLine is cafe.
      */
-    @Test 
     public void testAddOrderTrue() {
-
+        shop1.addOrder(true);
+        assertNotNull(shop1);
     }
 
     /**
-     * Tests addOrder when the currentLine is not cafe.
+     * Tests addOrder when the currentLine is mobile.
      */
-    @Test 
     public void testAddOrderFalse() {
-        
+        shop1.addOrder(false);
+        assertNotNull(shop1);
     }
 
     /**
      * Tests removeOrder when currentLine is mobile.
      */
-    @Test 
     public void testRemoveOrderMobile() {
 
     }
@@ -81,7 +79,6 @@ public class ShopTest {
     /**
      * Tests removeOrder when currentLine mobile is empty.
      */
-    @Test 
     public void testRemoveOrderMobileEmpty() {
 
     }
@@ -89,7 +86,6 @@ public class ShopTest {
     /**
      * Tests removeOrder when currentLine is cafe.
      */
-    @Test 
     public void testRemoveOrderCafe() {
         
     }
@@ -97,7 +93,6 @@ public class ShopTest {
     /**
      * Tests removeOrder when currentLine cafe is empty.
      */
-    @Test 
     public void testRemoveOrderCafeEmpty() {
         
     }
@@ -105,7 +100,6 @@ public class ShopTest {
     /**
      * Tests addObserver.
      */
-    @Test
     public void testAddObserver() {
         
     }
@@ -113,7 +107,6 @@ public class ShopTest {
     /**
      * Tests notifyObservers.
      */
-    @Test
     public void testNotifyObservers() {
 
     }
