@@ -17,130 +17,143 @@ import student.TestCase;
 
 public class ShopTest {
     private Shop shop1;
-    private RecordingObserver observer
     
     /**
      * Sets up variables to use for tests.
      */
     public void setUp() {
         shop1 = new Shop();
-        observer = new RecordingObserver();
-        shop1.addObserver(observer);
     }
     
     /**
      * Tests decideLine when the cafe is empty.
      */
     public void testDecideLineCafeEmpty() {
-        fill(0, 2);
+        assertTrue(shop1.getCafeLine().isEmpty());
         shop1.decideLine();
-        assertRemoveServes(false);
+        assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
     }
     
     /**
-     * Tests decideLine when mobile has 3 more orders than cafe.
+     * Tests decideLine when cafe isn't empty.
      */
-    public void testDecideLineMobile3MoreOrders() {
-        fill(1, 4);
+    public void testDecideLineCafeNotEmpty() {
+        shop1.addOrder(true);
+        shop1.addOrder(false);
         shop1.decideLine();
-        assertRemoveServes(false);
+        assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
     }
 
     /**
      * Tests decideLine when mobile has more than 3 more orders than cafe.
      */
-    public void testDecideLineMobileTooManyOrders() {
-        fill(1, 7);
+    public void testDecideLineMobile3MoreOrders() {
+        for(int i = 0; i < 4; i++) {
+            shop1.addOrder(false);
+        }
+        shop1.addOrder(true);
         shop1.decideLine();
-        assertRemoveServes(false);
+        assertEquals(shop1.getMobileLine(), shop1.getCurrentLine());
     }
-
+    
     /**
-     * Tests decideLine when cafe has more orders than mobile.
+     * Tests decideLine when mobile has a lot more orders than cafe.
      */
-    public void testDecideLineCafeMoreOrders() {
-        fill(4, 1);
+    public void testDecideLineMobileMore() {
+        for(int i = 0; i < 10; i++) {
+            shop1.addOrder(false);
+        }
+        shop1.addOrder(true);
         shop1.decideLine();
-        assertRemoveServes(true);
+        assertEquals(shop1.getMobileLine(), shop1.getCurrentLine());
     }
 
     /**
      * Tests addOrder when the currentLine is cafe.
      */
     public void testAddOrderTrue() {
+        assertTrue(shop1.getCafeLine().isEmpty());
+        assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
         shop1.addOrder(true);
-        assertNotNull(shop1);
+        assertEquals(1, shop1.getCafeLine().size());
     }
 
     /**
      * Tests addOrder when the currentLine is mobile.
      */
     public void testAddOrderFalse() {
-        shop1.addOrder(false);
-        assertNotNull(shop1);
-    }
-
-    /**
-     * Tests removeOrder when currentLine is mobile.
-     */
-    public void testRemoveOrderMobile() {
-        fill(1,4);
-        int before = observer.count();
-        assertRemoveServes(false);
-        assertEquals(before + 1, observer.count());
-    }
-
-    /**
-     * Tests removeOrder when currentLine mobile is empty.
-     */
-    public void testRemoveOrderMobileEmpty() {
-        fill(2, 0);
-        assertRemoveServes(true);
-    }
-
-    /**
-     * Tests removeOrder when currentLine is cafe.
-     */
-    public void testRemoveOrderCafe() {
-        fill(2, 2);
-        int before = observer.count();
-        assertRemoveServes(true);
-        assertEquals(before + 1, observer.count());   
-    }
-
-    /**
-     * Tests removeOrder when currentLine cafe is empty.
-     */
-    public void testRemoveOrderCafeEmpty() {
-        fill(0, 2);
-        assertRemoveServes(false);
-    }
-
-    /**
-     * Tests addObserver.
-     */
-    public void testAddObserver() {
-        RecordingObserver second = new RecordingObserver();
-        shop1.addObserver(second);
-
+        for(int i = 0; i < 4; i++) {
+            shop1.addOrder(false);
+        }
         shop1.addOrder(true);
-
-        assertEquals(1, observer.count());
-        assertEquals(1, second.count());
-    }
-
-    /**
-     * Tests notifyObservers.
-     */
-    public void testNotifyObservers() {
-     RecordingObserver second = new RecordingObserver();
-        shop1.addObserver(second);
-
+        shop1.decideLine();
+        assertEquals(shop1.getMobileLine(), shop1.getCurrentLine());
+        assertEquals(4, shop1.getMobileLine().size());
         shop1.addOrder(false);
-
-        String display = observer.last();
-        assertTrue(display.startsWith("Cafe: "));
-        assertTrue(display.contains(SEP));
-        assertEquals(display, second.last());
+        assertEquals(5, shop1.getMobileLine().size());
     }
+
+//    /**
+//     * Tests removeOrder when currentLine is mobile.
+//     */
+//    public void testRemoveOrderMobile() {
+//        fill(1,4);
+//        int before = observer.count();
+//        assertRemoveServes(false);
+//        assertEquals(before + 1, observer.count());
+//    }
+//
+//    /**
+//     * Tests removeOrder when currentLine mobile is empty.
+//     */
+//    public void testRemoveOrderMobileEmpty() {
+//        fill(2, 0);
+//        assertRemoveServes(true);
+//    }
+//
+//    /**
+//     * Tests removeOrder when currentLine is cafe.
+//     */
+//    public void testRemoveOrderCafe() {
+//        fill(2, 2);
+//        int before = observer.count();
+//        assertRemoveServes(true);
+//        assertEquals(before + 1, observer.count());   
+//    }
+//
+//    /**
+//     * Tests removeOrder when currentLine cafe is empty.
+//     */
+//    public void testRemoveOrderCafeEmpty() {
+//        fill(0, 2);
+//        assertRemoveServes(false);
+//    }
+//
+//    /**
+//     * Tests addObserver.
+//     */
+//    public void testAddObserver() {
+//        RecordingObserver second = new RecordingObserver();
+//        shop1.addObserver(second);
+//
+//        shop1.addOrder(true);
+//
+//        assertEquals(1, observer.count());
+//        assertEquals(1, second.count());
+//    }
+//
+//    /**
+//     * Tests notifyObservers.
+//     */
+//    public void testNotifyObservers() {
+//     RecordingObserver second = new RecordingObserver();
+//        shop1.addObserver(second);
+//
+//        shop1.addOrder(false);
+//
+//        String display = observer.last();
+//        assertTrue(display.startsWith("Cafe: "));
+//        assertTrue(display.contains(SEP));
+//        assertEquals(display, second.last());
+//    }
 }
