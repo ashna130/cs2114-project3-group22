@@ -15,8 +15,8 @@ public class LineControllerTest {
 
     @Before
     public void setUp() {
-        controller = new LineController();
         line = new Line<Order>();
+        controller = new LineController(line);
     }
 
     /**
@@ -25,7 +25,7 @@ public class LineControllerTest {
     @Test
     public void testAddOnClickedUnlocked() {
         assertTrue(line.isEmpty());
-        line.addOnClicked(false);
+        controller.addOnClicked(false);
         assertFalse(line.isEmpty());
     }
 
@@ -35,7 +35,7 @@ public class LineControllerTest {
     @Test
     public void testAddOnClickedLocked() {
         assertTrue(line.isEmpty());
-        line.addOnClicked(true);
+        controller.addOnClicked(true);
         assertTrue(line.isEmpty());
     }
 
@@ -46,7 +46,7 @@ public class LineControllerTest {
     public void testRemoveOnClickedUnlocked() {
         line.enqueue(new Order());
         assertFalse(line.isEmpty());
-        line.removeOnClicked(false);
+        controller.removeOnClicked(false);
         assertTrue(line.isEmpty());
     }
 
@@ -57,7 +57,7 @@ public class LineControllerTest {
     public void testRemoveOnClickedLocked() {
         line.enqueue(new Order());
         assertFalse(line.isEmpty());
-        line.removeOnClicked(true);
+        controller.removeOnClicked(true);
         assertFalse(line.isEmpty());
     }
 }
