@@ -1,21 +1,18 @@
 # cs2114-project3-group22
 
 **Reflection**
-What changed from the spec?
-- We moved some of the validation around. Originally, WindowView was going to validate for too many inputs, but now that is split between WindowView and LineController. onRemoveClicked() and onAddClicked() passes a boolean as a parameter that lets the controller know whether or not the execute the function. We chose to do this because our old approach, which was to make it so that onRemoveClicked() and onAddClicked() would not be called if the validation didn't pass, was not possible given how JButtons work. 
-- Line also got a few more fields and methods to make it able to communicate with and hold the necessary observers for an MVC. This was a necessity in order for the MVC to function.
-- Lastly, WindowView got a few more fields that help with the display, such as titleFont and orderFont, which we chose to add in order to make the view more visually appealing and keep the code cleaner, since we use these fonts in multiple places.
-
-Does the model stand alone?
-- Yes, the model is fully functional by itself, it only needs to be told when to add/remove orders.
-
-Unknowns
-- We have figured out how to randomize orders. Each order has a list of possible options that it randomly selects from, and randomly determines a price between 1.50 and 15.00.
-- We have not added different queues with different priorities, and as such have not decided on an algorithm for how to prioritize different queues.
+Classes the new feature touched:
+- The new feature implements a new class, Shop. To do so, we moved the methods that the controller calls from Line to Shop. Doing so required us adjusting Line and the creation of a new class, ShopController, which replaced LineController. The Driver was also adjusted to correctly declare and instantiate a Shop instead of a Line. We also needed a new button to add an order to the second line, which was added to the WindowView class.
+Does the change cross the model/view line?
+- No, the view still does not have direct access to the model and vice versa, and none of the model's logic is stored outside the three class files for the model.
+What changed from the D3 plan?
+- The D3 plan was vague and did not specify changes to the Driver and WindowView. Subtle changes to these classes were necessary to implement the Shop.
 
 **Next Steps**
-The MVP is currently finished. The main work we need to do now is to finish all the test cases and ensure the program will not crash, and then work on our stretch goal of adding multiple queues. This will likely cause the creation of a new class which will manage observers, moving addObserver() and notifyObservers() from Line to whatever this new class, likely called Store, would be. It would have a few methods such as prioritizeLine() to decide which line to prioritize the order from next, as well as addLine(), removeLine(), and a toString method to show what lines it is currently storing. It will need tests to ensure this is working, and will probably be built off of an ArrayList<>. 
-Arjun, Ashna, and Kaitlyn will handle adding the required test cases. Rin will handle adding the Store class and implementing the requisite changes to other classes.
+In order to get ready for the 3-minute demo, we want to reformat the visuals of how orders are displayed. We implemented our stretch goal of having multiple lines to represent different avenues of customers. In our 3-minute demo, we will show off how the program is intended to be used by demonstrating adding and removing orders, as well as demonstrating what will happen in the case of bad input, such as spamming the add order button or attempting to remove an order from an empty line. The primary work we need to do is create the slideshow. Rin will be responsible for adjusting how orders are displayed, and Ashna and Kaitlyn will be responsible for preparing the slideshow.
+
+**How to run the test cases**
+Our test cases are all stored under the Model folder and can be run in Eclipse using JUnit 4.
 
 **Attribution**
 Driver: Rin Hall
@@ -27,5 +24,11 @@ Order: Kaitlyn Vasquez
 ConsoleView: Rin Hall
 Observer: Rin Hall
 WindowView: Rin Hall
+
+Shop: Rin Hall
+Shop Controller: Rin Hall
+LineTest: Ashna Velikath
+- edited by Rin Hall
+OrderTest: Kaitlyn Vasquez
 
 GenAI Note: We did not use any GenAI for this phase of the project.
