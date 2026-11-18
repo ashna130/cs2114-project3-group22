@@ -86,7 +86,7 @@ public class ShopTest {
     public void testRemoveOrderMobile() {
         fill(1,4);
         int before = observer.count();
-        assertRemovesServes(false);
+        assertRemoveServes(false);
         assertEquals(before + 1, observer.count());
     }
 
