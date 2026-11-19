@@ -100,67 +100,93 @@ public class ShopTest extends TestCase{
         assertEquals(5, shop1.getMobileLine().size());
     }
 
-//    /**
-//     * Tests removeOrder when currentLine is mobile.
-//     */
-//    public void testRemoveOrderMobile() {
-//        fill(1,4);
-//        int before = observer.count();
-//        assertRemoveServes(false);
-//        assertEquals(before + 1, observer.count());
-//    }
-//
-//    /**
-//     * Tests removeOrder when currentLine mobile is empty.
-//     */
-//    public void testRemoveOrderMobileEmpty() {
-//        fill(2, 0);
-//        assertRemoveServes(true);
-//    }
-//
-//    /**
-//     * Tests removeOrder when currentLine is cafe.
-//     */
-//    public void testRemoveOrderCafe() {
-//        fill(2, 2);
-//        int before = observer.count();
-//        assertRemoveServes(true);
-//        assertEquals(before + 1, observer.count());   
-//    }
-//
-//    /**
-//     * Tests removeOrder when currentLine cafe is empty.
-//     */
-//    public void testRemoveOrderCafeEmpty() {
-//        fill(0, 2);
-//        assertRemoveServes(false);
-//    }
-//
-//    /**
-//     * Tests addObserver.
-//     */
-//    public void testAddObserver() {
-//        RecordingObserver second = new RecordingObserver();
-//        shop1.addObserver(second);
-//
-//        shop1.addOrder(true);
-//
-//        assertEquals(1, observer.count());
-//        assertEquals(1, second.count());
-//    }
-//
-//    /**
-//     * Tests notifyObservers.
-//     */
-//    public void testNotifyObservers() {
-//     RecordingObserver second = new RecordingObserver();
-//        shop1.addObserver(second);
-//
-//        shop1.addOrder(false);
-//
-//        String display = observer.last();
-//        assertTrue(display.startsWith("Cafe: "));
-//        assertTrue(display.contains(SEP));
-//        assertEquals(display, second.last());
-//    }
+    /**
+     * Tests removeOrder when currentLine is mobile.
+     */
+    public void testRemoveOrderMobile() {
+        List<String> updates = new ArrayList<String>();
+        shop1.addObserver(recorder(updates));
+
+     
+        for (int i = 0; i < 4; i++){
+            shop1.addOrder(false);
+        }
+        shop1.addOrder(true);
+        int before = updatesSize();
+
+        shop1.removeOrder;
+     
+        assertEquals(shop1.getMobileLine(), shop1.getCurrentLine());
+        assertEquals(3, shop1.getMobileLine().size());
+        assertEquals(1, shop1.getCafeLine().size());
+        assertEquals(before + 1, updates.size());
+    }
+     
+    /**
+     * Tests removeOrder when currentLine mobile is empty.
+     */
+    public void testRemoveOrderMobileEmpty() {
+        shop1.addOrder(true);
+        shop1.addOrder(true);
+        assertTrue(shop1.getMobileLine().isEmpty());
+
+        shop1.removeOrder();
+
+        assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
+        assertEquals(1, shop1.getCafeLine().size());
+        assertTrue(shop1.getMobileLine().isEmpty());
+    }
+
+    /**
+     * Tests removeOrder when currentLine is cafe.
+     */
+    public void testRemoveOrderCafe() {
+     
+        shop1.addOrder(true);
+        shop1.addOrder(true);
+        shop1.addOrder(false);
+        shop1.addOrder(false);
+        int before = updates.size();
+
+        shop1.removeOrder();
+
+        assertEquals(shop1.getCafeLine(), shop1.getCurrentLine());
+        assertEquals(1, shop1.getCafeLine().size());
+        assertEquals(2, shop1.getMobileLine().size());
+        assertEquals(before + 1, updates.size());
+    }
+ 
+    /**
+     * Tests removeOrder when currentLine cafe is empty.
+     */
+    public void testRemoveOrderCafeEmpty() {
+        shop1.addOrder(false);
+        shop1.addOrder(false);
+        assertTrue(shop1.getCafeLine().isEmpty());
+
+        shop1.removeOrder();
+        assertEquals(shop1.getMobileLine(), shop1.getCurrentLine());
+        assertTrue(shop1.getCafeLine().isEmpty());
+        assertEquals(1, shop1.getMobileLine().size());
+       }
+    }
+
+    /**
+     * Tests addObserver.
+     */
+    public void testAddObserver() {
+        List<String> updates = new ArrayList<String>();
+        shop1.addObserver(recorder(updates));
+
+        shop1.addOrder(true);
+
+        assertEquals(1, updates.size());
+    }
+    
+    /**
+     * Tests notifyObservers.
+     */
+    public void testNotifyObservers() {
+        
+   }
 }
